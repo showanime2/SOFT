@@ -1,9 +1,10 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { extractElementFunction } from '../src/compiler/extractFunctionBlocks.mjs';
+import { extractElementFunction, extractStyleFunction } from '../src/compiler/extractFunctionBlocks.mjs';
 import { extractElement } from '../src/compiler/extractElement.mjs';
 import { JSDOM } from 'jsdom';
 import { replaceElement } from '../src/compiler/replaceElement.mjs';
+import { compileStyle } from '../src/compiler/compileStyle.mjs';
 
 function generateUniqueId() {
     const alphanumericSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -26,10 +27,15 @@ async function buildFile(srcFilePath, destFilePath) {
 
         const lines = data.split('\n').map(line => line + '\n');
 
-        const functionBlock = extractElementFunction(lines);
-        const element = extractElement(functionBlock);
+        const elementBlock = extractElementFunction(lines);
+        const element = extractElement(elementBlock);
         const transformedElement = addComponentIdToElements(element.element, uniqueId);
         data = replaceElement(lines, element.start, element.end, transformedElement);
+
+        const styleBlock = extractStyleFunction(lines);
+        const style = extractElement(styleBlock);
+        const compiledStyle = compileStyle(style.element, uniqueId)
+        data = replaceElement(lines, style.start, style.end, compiledStyle)
 
         await fs.mkdir(path.dirname(destFilePath), { recursive: true });
         await fs.writeFile(destFilePath, data);

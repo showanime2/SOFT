@@ -1,26 +1,15 @@
-export async function CreateComponent(element, css, script, loadData) {
+import { onClientSide } from './client.mjs';
+import { onServerSide } from './server.mjs';
+import { hydrate } from '../hydration/hydrate.mjs';
+
+export function CreateComponent(element, css, script, loadData) {
     if (typeof window !== 'undefined') {
         if (window.SOFT?.SSR) {
-            try {
-                const module = await import('../hydration/hydrate.mjs');
-                return module.hydrate(element, css, script)
-            } catch (error) {
-                console.error("Error loading the module:", error);
-            }
+            return hydrate(element, css, script)
         } else {
-            try {
-                const module = await import('./client.mjs');
-                return module.onClientSide(element, css, script, loadData)
-            } catch (error) {
-                console.error("Error loading the module:", error);
-            }
+            return onClientSide(element, css, script, loadData)
         }
     } else {
-        try {
-            const module = await import('./server.mjs');
-            return module.onServerSide(element, css, script, loadData)
-        } catch (error) {
-            console.error("Error loading the module:", error);
-        }
+        return onServerSide(element, css, script, loadData)
     }
 }

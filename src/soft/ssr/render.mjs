@@ -5,9 +5,11 @@ export async function renderComponent(component, html) {
     const document = dom.window.document;
 
     const app = document.querySelector(".app")
-    app.outerHTML = component.element
-    document.head.innerHTML += component.css
+    const styleElementsString = extractStyleElements(component)
+    document.head.innerHTML += styleElementsString
 
+    app.outerHTML = component.element
+    
     document.body.innerHTML += `
         <script>
             window.SOFT = {}
@@ -17,4 +19,15 @@ export async function renderComponent(component, html) {
 
     const modifiedHtml = dom.serialize();
     return modifiedHtml
+}
+
+function extractStyleElements(component) {
+    const styleElementRegex = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
+
+    const matches = component.element.match(styleElementRegex);
+    
+    let styleElementsString = component.css || ""
+    styleElementsString = styleElementsString + matches.join("")
+    
+    return styleElementsString
 }

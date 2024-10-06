@@ -12,7 +12,7 @@ const __dirname = dirname(__filename);
 const srcDir = path.resolve('src');
 const buildDir = path.resolve('build');
 
-buildProject(srcDir, buildDir);
+await buildProject(srcDir, buildDir);
 
 const app = express();
 
@@ -32,17 +32,21 @@ app.use((req, res, next) => {
 });
 
 app.get('/', async (req, res) => {
-    readFile(path.join(__dirname, '../src/pages/index/index.html'), 'utf8', async (err, htmlContent) => {
-        if (err) {
-            console.error('Error reading the HTML file:', err);
-            return;
-        }
+    const SSR = false
+    if (SSR) {
+        readFile(path.join(__dirname, '../src/pages/index/index.html'), 'utf8', async (err, htmlContent) => {
+            if (err) {
+                console.error('Error reading the HTML file:', err);
+                return;
+            }
+            
+            const component = await import('../build/pages/index/index.mjs');
+            res.status(200).send(await renderComponent(await component.Index, htmlContent))
+        })
+    } else {
+        res.sendFile(path.join(__dirname, '../src/pages/index/index.html'));
+    }
 
-        const component = await import('../build/pages/index/index.mjs');
-        res.status(200).send(await renderComponent(component.Index, htmlContent))
-    })
-
-    // res.sendFile(path.join(__dirname, '../src/pages/index/index.html'));
 });
 
 const PORT = 3000;

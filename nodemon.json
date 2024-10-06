@@ -1,0 +1,9 @@
+{
+    "watch": [
+        "server",
+        "src"
+    ],
+    "ignore": [
+        "build"
+    ]
+}

@@ -1,9 +1,9 @@
 {
     "watch": [
-        "server",
-        "src"
+        "src/demo",
+        "src/soft"
     ],
     "ignore": [
-        "build"
+        "src/build"
     ]
 }

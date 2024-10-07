@@ -34,13 +34,13 @@ app.use((req, res, next) => {
 app.get('/', async (req, res) => {
     const SSR = false
     if (SSR) {
-        readFile(path.join(__dirname, '../src/pages/index/index.html'), 'utf8', async (err, htmlContent) => {
+        readFile(path.join(__dirname, '../src/site/pages/index/index.html'), 'utf8', async (err, htmlContent) => {
             if (err) {
                 console.error('Error reading the HTML file:', err);
                 return;
             }
             
-            const component = await import('../build/pages/index/index.mjs');
+            const component = await import('../build/site/pages/index/index.mjs');
             res.status(200).send(await renderComponent(await component.Index, htmlContent))
         })
     } else {

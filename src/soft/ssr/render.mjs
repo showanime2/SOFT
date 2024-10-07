@@ -1,6 +1,7 @@
 import { JSDOM } from "jsdom";
 
 export async function renderComponent(component, html) {
+    console.log(html)
     const dom = new JSDOM(html);
     const document = dom.window.document;
 

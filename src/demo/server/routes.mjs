@@ -10,17 +10,17 @@ const __dirname = dirname(__filename);
 const router = express()
 
 router.get("/", async (req, res) => {
-    readFile(path.join(__dirname, '../public/pages/index/index.html'), 'utf8', async (err, htmlContent) => {
-        if (err) {
-            console.error('Error reading the HTML file:', err);
-            return;
-        }
+    // readFile(path.join(__dirname, '../public/pages/index/index.html'), 'utf8', async (err, htmlContent) => {
+    //     if (err) {
+    //         console.error('Error reading the HTML file:', err);
+    //         return;
+    //     }
 
-        const module = await import('../../build/pages/index/index.mjs');
-        res.status(200).send(await renderComponent(module, htmlContent))
-    })
+    //     const module = await import('../../build/pages/index/index.mjs');
+    //     res.status(200).send(await renderComponent(module, htmlContent))
+    // })
 
-    // res.sendFile(path.join(__dirname, '../public/pages/index/index.html'));
+    res.sendFile(path.join(__dirname, '../public/pages/index/index.html'));
 })
 
 export function registerRoutes(app) {

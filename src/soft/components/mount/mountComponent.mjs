@@ -1,5 +1,6 @@
 export function mountComponent(component, selector) {
     if (typeof window === "undefined") return
+    if (window.SOFT?.SSR) return
 
     const element = document.querySelector(selector)
     if (!selector) {

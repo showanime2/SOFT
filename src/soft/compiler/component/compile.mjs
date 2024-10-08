@@ -5,6 +5,7 @@ import { modifyImportRoutes } from "../imports/modifyImportRoutes.mjs";
 import { addElementReference } from "./addElementReference.mjs";
 import { extractElement } from "./extractElement.mjs";
 import { extractFunctionBlock } from "./extractFunctionBlock.mjs";
+import { findPlaceholder } from "./findPlaceHolder.mjs";
 import { modifyFunction } from "./modifyFunctions.mjs";
 import { replaceElement } from "./replaceElement.mjs";
 
@@ -15,8 +16,10 @@ export function compileComponent(fileContents) {
 
     modifyImportRoutes(lines)
 
-    lines.unshift(`const COMPONENT_ID = "${componentId}";\n\n`)
+    lines.unshift(`export const COMPONENT_ID = "${componentId}";\n`)
     addElementReference(lines, componentId)
+
+    findPlaceholder(lines)
 
     modifyFunction(lines)
 
@@ -27,9 +30,11 @@ export function compileComponent(fileContents) {
     fileContents = replaceElement(lines, element.start, element.end, compiledElement);
 
     const styleBlock = extractFunctionBlock(lines, "style");
-    const style = extractElement(styleBlock);
-    const compiledCSS = compileStyle(style.element, componentId)
-    fileContents = replaceElement(lines, style.start, style.end, compiledCSS)
+    if (styleBlock) {
+        const style = extractElement(styleBlock);
+        const compiledCSS = compileStyle(style.element, componentId)
+        fileContents = replaceElement(lines, style.start, style.end, compiledCSS)
+    }
 
     return fileContents
 }

@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import { extractStyleElementsFromElement } from "./extractStyleElementsFromElement.mjs";
 
 export async function renderComponent(module, html) {
     const componentId = module.COMPONENT_ID
@@ -9,11 +10,15 @@ export async function renderComponent(module, html) {
     const dom = new JSDOM(html);
     const document = dom.window.document;
 
-    const element = module.element(data)
-    const CSS = module.style ? `<style class="${componentId}">${module.style()}</style>` : ""
+    let element = await module.element(data)
+    let CSS = module.style ? `<style class="${componentId}">${await module.style()}</style>` : ""
 
-    addCSS(document, CSS)
+    const extracted = extractStyleElementsFromElement(document, element)
+    element = extracted.element
+    CSS = CSS + extracted.styleElements
+
     replaceElement(document, element, placeholder)
+    addCSS(document, CSS)
     addScript(document)
 
     return dom.serialize()
@@ -22,6 +27,7 @@ export async function renderComponent(module, html) {
 function addCSS(document, css) {
     document.head.innerHTML += css
 }
+
 function replaceElement(document, element, selector) {
     const placeholder = document.querySelector(selector)
     placeholder.outerHTML = element

@@ -24,7 +24,7 @@ export function compileComponent(fileContents) {
     modifyFunction(lines)
 
     const elementBlock = extractFunctionBlock(lines, "element");
-    const element = extractElement(elementBlock);
+    let element = extractElement(elementBlock);
 
     const compiledElement = addComponentIdToElementsOnSSR(element.element, componentId);
     fileContents = replaceElement(lines, element.start, element.end, compiledElement);

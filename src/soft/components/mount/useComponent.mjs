@@ -1,4 +1,4 @@
-export function useMount(component) {
+export function useMountOnCSR(component) {
     const type = generateRandomString(10);
     const placeholderElement = `<Placeholder type="${type}"></Placeholder>`;
 
@@ -23,7 +23,7 @@ function replaceElement(placeholderElement, component) {
     if (component.styleElement) {
         document.head.appendChild(component.styleElement)
     }
-    
+
     placeholderElement.replaceWith(component.element);
 }
 

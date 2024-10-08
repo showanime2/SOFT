@@ -3,12 +3,13 @@ import { htmlStringToElement } from "../dom/util.mjs"
 import { addComponentIdToElements } from "./id/addIdToElements.mjs"
 import { generateComponentId } from "./id/generateId.mjs"
 
-export function createComponent(elementFn, styleFn) {
+export async function createComponent(elementFn, styleFn) {
     if (typeof window === "undefined") return
+    if (window.SOFT?.SSR) return
 
     const id = generateComponentId(7)
 
-    const element = elementFn()
+    const element = await elementFn()
     const HTMLElement = htmlStringToElement(element)
     addComponentIdToElements(id, HTMLElement)
 

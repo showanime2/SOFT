@@ -1,23 +1,23 @@
-export const COMPONENT_ID = "sa-2roQBt4";
+export const COMPONENT_ID = "sa-WRpyUPO";
 import { createComponent } from "../../soft/components/create.mjs"
 
-export function element() {
+export async function element() {
     return `
-        <div class="top sa-2roQBt4">
-                <div class="logo sa-2roQBt4">
-                    <div class="s sa-2roQBt4">S</div>
-                    <div class="o sa-2roQBt4">O</div>
-                    <div class="f sa-2roQBt4">F</div>
-                    <div class="t sa-2roQBt4">T</div>
-                </div>
-                <div class="description sa-2roQBt4">A New Way Of Web Apps.</div>
+        <div class="top sa-WRpyUPO">
+            <div class="logo sa-WRpyUPO">
+                <div class="s sa-WRpyUPO">S</div>
+                <div class="o sa-WRpyUPO">O</div>
+                <div class="f sa-WRpyUPO">F</div>
+                <div class="t sa-WRpyUPO">T</div>
             </div>
+            <div class="description sa-WRpyUPO">A New Way Of Web Apps.</div>
+        </div>
     `
 }
 
 export function style() {
     return `
-        .top.sa-2roQBt4 {
+        .top.sa-WRpyUPO {
             display: flex;
             flex-direction: column;
             height: fit-content;
@@ -25,7 +25,7 @@ export function style() {
             margin: 10vw 0;
         }
         
-        .logo.sa-2roQBt4 {
+        .logo.sa-WRpyUPO {
             display: flex;
             height: fit-content;
             width: fit-content;
@@ -35,21 +35,21 @@ export function style() {
             letter-spacing: 0.5vw;
         }
         
-        .s.sa-2roQBt4 {color: red;}
+        .s.sa-WRpyUPO {color: red;}
         
-        .o.sa-2roQBt4 {
+        .o.sa-WRpyUPO {
             color: pink;
         }
         
-        .f.sa-2roQBt4 {
+        .f.sa-WRpyUPO {
             color: lime;
         }
         
-        .t.sa-2roQBt4 {
+        .t.sa-WRpyUPO {
             color: deepskyblue;
         }
         
-        .description.sa-2roQBt4 {
+        .description.sa-WRpyUPO {
             display: flex;
             height: fit-content;
             width: fit-content;
@@ -59,4 +59,4 @@ export function style() {
     `
 }
 
-export const Top = createComponent(element, style)
+export const Top = await createComponent(element, style)

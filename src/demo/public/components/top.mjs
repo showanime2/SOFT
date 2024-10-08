@@ -3,14 +3,14 @@ import { createComponent } from "../../../soft/components/create.mjs"
 function element() {
     return `
         <div class="top">
-                <div class="logo">
-                    <div class="s">S</div>
-                    <div class="o">O</div>
-                    <div class="f">F</div>
-                    <div class="t">T</div>
-                </div>
-                <div class="description">A New Way Of Web Apps.</div>
+            <div class="logo">
+                <div class="s">S</div>
+                <div class="o">O</div>
+                <div class="f">F</div>
+                <div class="t">T</div>
             </div>
+            <div class="description">A New Way Of Web Apps.</div>
+        </div>
     `
 }
 
@@ -58,4 +58,4 @@ function style() {
     `
 }
 
-export const Top = createComponent(element, style)
+export const Top = await createComponent(element, style)

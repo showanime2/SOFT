@@ -58,4 +58,6 @@ function style() {
     `
 }
 
-export const Top = await createComponent(element, style)
+export async function Top() {
+    return await createComponent(element, style)
+}

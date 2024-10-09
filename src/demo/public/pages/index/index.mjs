@@ -1,12 +1,14 @@
 import { createComponent } from "../../../../soft/components/create.mjs"
 import { mountComponent } from "../../../../soft/components/mount/mountComponent.mjs"
 import { useMount } from "../../../../soft/components/mount/useMount.mjs"
-const Top = await import("../../components/top.mjs")
+import { Reviews } from "../../components/reviews.mjs"
+import { Top } from "../../components/top.mjs"
 
-async function element() {
+async function element({ data, props }) {
     return `
         <div class="app">
-            ${await useMount(Top, Top.Top)}
+            ${useMount(Top)}
+            ${useMount(Reviews)}
         </div>
     `
 }
@@ -22,7 +24,7 @@ function style() {
 }
 
 function script(element) {
-    
+
 }
 
 export const Index = await createComponent(element, style)

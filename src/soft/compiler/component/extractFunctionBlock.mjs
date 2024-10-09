@@ -13,9 +13,13 @@ export function extractFunctionBlock(lines, functionName) {
 
             for (let j = i; j < lines.length; j++) {
                 const line = lines[j];
+                const chars = line.split("")
 
-                if (line.includes("{")) { subBrackets++ }
-                if (line.includes("}") && subBrackets > 0) { subBrackets-- }
+                for (let i = 0; i < chars.length; i++) {
+                    const char = chars[i];
+                    if (char === "{") subBrackets++
+                    if (char === "}" && subBrackets > 0) subBrackets--
+                }
 
                 if (line.includes("}") && subBrackets === 0) {
                     functionBlock = functionBlock + line

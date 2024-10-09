@@ -1,10 +1,11 @@
 import { useMountOnSSR } from "../../ssr/useMount.mjs";
 import { useMountOnCSR } from "./useComponent.mjs";
 
-export async function useMount(module, component) {
+export function useMount(module, component, params) {
     if (typeof window === "undefined") {
-        return await useMountOnSSR(module)
+        return ""
+        return useMountOnSSR(module, params)
     } else {
-        return useMountOnCSR(component)
+        return useMountOnCSR(component, params)
     }
 }

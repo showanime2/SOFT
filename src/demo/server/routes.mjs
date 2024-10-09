@@ -9,6 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const router = express()
 
+
 router.get("/", async (req, res) => {
     readFile(path.join(__dirname, '../public/pages/index/index.html'), 'utf8', async (err, htmlContent) => {
         if (err) {

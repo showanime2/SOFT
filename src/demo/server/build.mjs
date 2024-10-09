@@ -7,7 +7,7 @@ async function buildFile(srcFilePath, destFilePath) {
         let fileContents = await fs.readFile(srcFilePath, 'utf8');
 
         fileContents = compileComponent(fileContents)
-        
+
         await fs.mkdir(path.dirname(destFilePath), { recursive: true });
         await fs.writeFile(destFilePath, fileContents);
 

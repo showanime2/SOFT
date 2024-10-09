@@ -1,23 +1,23 @@
-export const COMPONENT_ID = "sa-WRpyUPO";
+export const COMPONENT_ID = "sa-4XX39hP";
 import { createComponent } from "../../soft/components/create.mjs"
 
 export async function element() {
     return `
-        <div class="top sa-WRpyUPO">
-            <div class="logo sa-WRpyUPO">
-                <div class="s sa-WRpyUPO">S</div>
-                <div class="o sa-WRpyUPO">O</div>
-                <div class="f sa-WRpyUPO">F</div>
-                <div class="t sa-WRpyUPO">T</div>
+        <div class="top sa-4XX39hP">
+            <div class="logo sa-4XX39hP">
+                <div class="s sa-4XX39hP">S</div>
+                <div class="o sa-4XX39hP">O</div>
+                <div class="f sa-4XX39hP">F</div>
+                <div class="t sa-4XX39hP">T</div>
             </div>
-            <div class="description sa-WRpyUPO">A New Way Of Web Apps.</div>
+            <div class="description sa-4XX39hP">A New Way Of Web Apps.</div>
         </div>
     `
 }
 
 export function style() {
     return `
-        .top.sa-WRpyUPO {
+        .top.sa-4XX39hP {
             display: flex;
             flex-direction: column;
             height: fit-content;
@@ -25,7 +25,7 @@ export function style() {
             margin: 10vw 0;
         }
         
-        .logo.sa-WRpyUPO {
+        .logo.sa-4XX39hP {
             display: flex;
             height: fit-content;
             width: fit-content;
@@ -35,21 +35,21 @@ export function style() {
             letter-spacing: 0.5vw;
         }
         
-        .s.sa-WRpyUPO {color: red;}
+        .s.sa-4XX39hP {color: red;}
         
-        .o.sa-WRpyUPO {
+        .o.sa-4XX39hP {
             color: pink;
         }
         
-        .f.sa-WRpyUPO {
+        .f.sa-4XX39hP {
             color: lime;
         }
         
-        .t.sa-WRpyUPO {
+        .t.sa-4XX39hP {
             color: deepskyblue;
         }
         
-        .description.sa-WRpyUPO {
+        .description.sa-4XX39hP {
             display: flex;
             height: fit-content;
             width: fit-content;
@@ -59,4 +59,28 @@ export function style() {
     `
 }
 
-export const Top = await createComponent(element, style)
+export async function Top() {
+    return await createComponent(element, style)
+}
+
+
+export async function SSRElement() {
+    return `
+        <div class="top sa-4XX39hP">
+            <div class="logo sa-4XX39hP">
+                <div class="s sa-4XX39hP">S</div>
+                <div class="o sa-4XX39hP">O</div>
+                <div class="f sa-4XX39hP">F</div>
+                <div class="t sa-4XX39hP">T</div>
+            </div>
+            <div class="description sa-4XX39hP">A New Way Of Web Apps.</div>
+        </div>
+    `
+}
+
+export const COMPONENT_USES = {}
+
+export async function importComponent(path) {
+        return await import(path)
+    }
+

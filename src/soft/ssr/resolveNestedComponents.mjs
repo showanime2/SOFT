@@ -1,51 +1,45 @@
 export async function resolveNestedComponents(module, document, originalHTML) {
     const ComponentUses = module.COMPONENT_USES;
-    
-    // Parse the HTML string into a DOM structure
-    let container = document.createElement('div');
-    container.innerHTML = originalHTML;  // Convert HTML string to DOM structure
-    
-    const componentNames = container.querySelectorAll("component-use");
-
+    let workingHTML = originalHTML;
     let CSS = "";
 
-    for (let i = 0; i < componentNames.length; i++) {
-        const component = ComponentUses[componentNames[i].id];
+    const componentElements = extractComponentElements(workingHTML);
+
+    for (const componentElement of componentElements) {
+        const componentId = extractComponentId(componentElement);
+        const component = ComponentUses[componentId];
 
         if (!component) continue;
 
         const childModule = await module.importComponent(component.importPath);
-        const componentId = childModule.COMPONENT_ID;
+        const moduleId = childModule.COMPONENT_ID;
 
         const data = childModule.loadData ? await childModule.loadData() : undefined;
 
-        // Render the component, assumed to be a string
         let elementHTML = await childModule.SSRElement({ data });
+        
+        workingHTML = workingHTML.replace(componentElement, elementHTML);
 
-        // Parse the string HTML into a DOM fragment
-        let renderedFragment;
-        if (typeof elementHTML === "string") {
-            renderedFragment = document.createRange().createContextualFragment(elementHTML);
-        } else {
-            renderedFragment = elementHTML;
-        }
+        CSS += childModule.style ? `<style class="${moduleId}">${await childModule.style()}</style>` : "";
 
-        // Replace component-use with rendered fragment
-        componentNames[i].replaceWith(renderedFragment);
-
-        // Handle CSS for the child component
-        CSS += childModule.style ? `<style class="${componentId}">${await childModule.style()}</style>` : "";
-
-        // Recursively resolve nested components
-        const nestedResult = await resolveNestedComponents(childModule, document, container.innerHTML);
-
-        // Combine CSS from nested components
+        const nestedResult = await resolveNestedComponents(childModule, document, workingHTML);
+        
+        workingHTML = nestedResult.html;
         CSS += nestedResult.css;
     }
 
-    // Return the updated HTML as a string
     return {
-        html: container.innerHTML,  // Convert back to an HTML string
+        html: workingHTML,
         css: CSS
     };
+}
+
+function extractComponentId(componentElement) {
+    const match = componentElement.match(/id=["']([^"']+)["']/);
+    return match ? match[1] : null;
+}
+
+function extractComponentElements(htmlString) {
+    const regex = /<component-use\s+[^>]*?id=["'][^"']+["'][^>]*?(?:\/?>|><\/component-use>)/g;
+    return htmlString.match(regex) || [];
 }

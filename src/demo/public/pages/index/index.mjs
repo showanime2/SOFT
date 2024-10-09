@@ -4,7 +4,7 @@ import { useMount } from "../../../../soft/components/mount/useMount.mjs"
 import { Reviews } from "../../components/reviews.mjs"
 import { Top } from "../../components/top.mjs"
 
-async function element({ data, props }) {
+function element({ data, props }) {
     return `
         <div class="app">
             ${useMount(Top)}
@@ -27,5 +27,5 @@ function script(element) {
 
 }
 
-export const Index = await createComponent(element, style)
+export const Index = createComponent(element, style)
 mountComponent(Index, ".app")

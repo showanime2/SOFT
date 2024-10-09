@@ -14,7 +14,7 @@ function addExportStatement(lines) {
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
-        
+
         if (line.includes("export")) {
             continue;
         }
@@ -23,15 +23,11 @@ function addExportStatement(lines) {
             const match = line.match(pattern);
             if (match) {
                 if (isInsideClassDefinition(lines, line)) break;
-                
+
                 const functionName = match[3] || match[2];
-                
+
                 if (functionName === 'element') {
-                    if (line.includes('async')) {
-                        lines[i] = `export ${line}`;
-                    } else {
-                        lines[i] = `export async ${line}`;
-                    }
+                    lines[i] = `export ${line}`;
                 } else {
                     lines[i] = `export ${line}`;
                 }
@@ -45,15 +41,15 @@ function isInsideClassDefinition(lines, currentLine) {
     const currentIndex = lines.indexOf(currentLine);
     const previousLines = lines.slice(0, currentIndex);
     let openBraces = 0;
-    
+
     for (const line of previousLines.reverse()) {
         openBraces += (line.match(/{/g) || []).length;
         openBraces -= (line.match(/}/g) || []).length;
-        
+
         if (line.includes('class') && openBraces > 0) {
             return true;
         }
     }
-    
+
     return false;
 }

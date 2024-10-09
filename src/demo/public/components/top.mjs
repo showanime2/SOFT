@@ -58,6 +58,6 @@ function style() {
     `
 }
 
-export async function Top() {
-    return await createComponent(element, style)
+export function Top() {
+    return createComponent(element, style)
 }

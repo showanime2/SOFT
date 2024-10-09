@@ -1,35 +1,35 @@
-export const COMPONENT_ID = "sa-NAp6lC8";
+export const COMPONENT_ID = "sa-B9oYCvx";
 import { createComponent } from "../../soft/components/create.mjs"
 
-export async function element(params) {
+export function element(params) {
     return `
-        <div class="card sa-NAp6lC8">
-            <div class="top sa-NAp6lC8">
-                <img class="profile-photo sa-NAp6lC8" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNupCwfSPATZwd25fjrcT3hjsB24vwpVSS2g&amp;s" alt="pfp">
+        <div class="card sa-B9oYCvx">
+            <div class="top sa-B9oYCvx">
+                <img class="profile-photo sa-B9oYCvx" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNupCwfSPATZwd25fjrcT3hjsB24vwpVSS2g&amp;s" alt="pfp">
             </div>
-            <div class="description sa-NAp6lC8"></div>
+            <div class="description sa-B9oYCvx"></div>
         </div>
     `
 }
 
 export function style() {
-    return `.sa-NAp6lC8.sa-NAp6lC8
-.sa-NAp6lC8 .sa-NAp6lC8 .sa-NAp6lC8 .sa-NAp6lC8 .sa-NAp6lC8 .sa-NAp6lC8 .sa-NAp6lC8 .sa-NAp6lC8 .sa-NAp6lC8.sa-NAp6lC8
-.sa-NAp6lC8 .sa-NAp6lC8 .sa-NAp6lC8 .sa-NAp6lC8 `
+    return `.sa-B9oYCvx.sa-B9oYCvx
+.sa-B9oYCvx .sa-B9oYCvx .sa-B9oYCvx .sa-B9oYCvx .sa-B9oYCvx .sa-B9oYCvx .sa-B9oYCvx .sa-B9oYCvx .sa-B9oYCvx.sa-B9oYCvx
+.sa-B9oYCvx .sa-B9oYCvx .sa-B9oYCvx .sa-B9oYCvx `
 }
 
-export async function Card(params) {
-    return await createComponent(element, style, params)
+export function Card(params) {
+    return createComponent(element, style, params)
 }
 
 
-export async function SSRElement(params) {
+export function SSRElement(params) {
     return `
-        <div class="card sa-NAp6lC8">
-            <div class="top sa-NAp6lC8">
-                <img class="profile-photo sa-NAp6lC8" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNupCwfSPATZwd25fjrcT3hjsB24vwpVSS2g&amp;s" alt="pfp">
+        <div class="card sa-B9oYCvx">
+            <div class="top sa-B9oYCvx">
+                <img class="profile-photo sa-B9oYCvx" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNupCwfSPATZwd25fjrcT3hjsB24vwpVSS2g&amp;s" alt="pfp">
             </div>
-            <div class="description sa-NAp6lC8"></div>
+            <div class="description sa-B9oYCvx"></div>
         </div>
     `
 }

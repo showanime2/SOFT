@@ -1,11 +1,11 @@
 import { createComponent } from "../../../soft/components/create.mjs"
 import { useMount } from "../../../soft/components/mount/useMount.mjs"
-const Card = await import("./card.mjs")
+import { Card } from "./card.mjs"
 
-async function element() {
+function element() {
     return `
         <div class="card-wrapper">
-            ${await useMount(Card, Card.Card, '1')}
+            ${useMount(Card)}
         </div>
     `
 }
@@ -16,6 +16,6 @@ function style() {
     `
 }
 
-export async function Reviews() {
-    return await createComponent(element, style)
+export function Reviews() {
+    return createComponent(element, style)
 }

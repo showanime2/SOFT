@@ -1,4 +1,4 @@
-export const COMPONENT_ID = "sa-COZA3hE";
+export const COMPONENT_ID = "sa-ETccDGZ";
 export const PLACEHOLDER = ".app";
 
 import { createComponent } from "../../../soft/components/create.mjs"
@@ -7,9 +7,9 @@ import { useMount } from "../../../soft/components/mount/useMount.mjs"
 import { Reviews } from "../../components/reviews.mjs"
 import { Top } from "../../components/top.mjs"
 
-export async function element({ data, props }) {
+export function element({ data, props }) {
     return `
-        <div class="app sa-COZA3hE">
+        <div class="app sa-ETccDGZ">
             ${useMount(Top)}
             ${useMount(Reviews)}
         </div>
@@ -18,7 +18,7 @@ export async function element({ data, props }) {
 
 export function style() {
     return `
-        .app.sa-COZA3hE {
+        .app.sa-ETccDGZ {
             display: flex;
             height: fit-content;
             width: 100vw;
@@ -26,16 +26,16 @@ export function style() {
     `
 }
 
-export function script(element = document.querySelector(".sa-COZA3hE")) {
+export function script(element = document.querySelector(".sa-ETccDGZ")) {
 }
 
-export const Index = await createComponent(element, style)
+export const Index = createComponent(element, style)
 mountComponent(Index, ".app")
 
 
-export async function SSRElement({ data, props }) {
+export function SSRElement({ data, props }) {
     return `
-        <div class="app sa-COZA3hE">
+        <div class="app sa-ETccDGZ">
             <component-use id="Top"></component-use>
             <component-use id="Reviews"></component-use>
         </div>

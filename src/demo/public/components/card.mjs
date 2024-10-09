@@ -17,6 +17,6 @@ function style() {
     `
 }
 
-export async function Card(params) {
-    return await createComponent(element, style, params)
+export function Card(params) {
+    return createComponent(element, style, params)
 }

@@ -1,36 +1,44 @@
-export const COMPONENT_ID = "sa-dFcDksQ";
+export const COMPONENT_ID = "sa-6NdtLiO";
 import { createComponent } from "../../soft/components/create.mjs"
 import { useMount } from "../../soft/components/mount/useMount.mjs"
-const Card = await import("./card.mjs")
+import { Card } from "./card.mjs"
 
-export async function element() {
+export function element() {
     return `
-        <div class="card-wrapper sa-dFcDksQ">
-            ${await useMount(Card, Card.Card, '1')}
+        <div class="card-wrapper sa-6NdtLiO">
+            ${useMount(Card)}
         </div>
     `
 }
 
 export function style() {
-    return `.sa-dFcDksQ.sa-dFcDksQ
-.sa-dFcDksQ .sa-dFcDksQ .sa-dFcDksQ .sa-dFcDksQ .sa-dFcDksQ .sa-dFcDksQ .sa-dFcDksQ .sa-dFcDksQ .sa-dFcDksQ.sa-dFcDksQ
-.sa-dFcDksQ .sa-dFcDksQ .sa-dFcDksQ .sa-dFcDksQ `
+    return `.sa-6NdtLiO.sa-6NdtLiO
+.sa-6NdtLiO .sa-6NdtLiO .sa-6NdtLiO .sa-6NdtLiO .sa-6NdtLiO .sa-6NdtLiO .sa-6NdtLiO .sa-6NdtLiO .sa-6NdtLiO.sa-6NdtLiO
+.sa-6NdtLiO .sa-6NdtLiO .sa-6NdtLiO .sa-6NdtLiO `
 }
 
-export async function Reviews() {
-    return await createComponent(element, style)
+export function Reviews() {
+    return createComponent(element, style)
 }
 
 
-export async function SSRElement() {
+export function SSRElement() {
     return `
-        <div class="card-wrapper sa-dFcDksQ">
-            ${await useMount(Card, Card.Card, '1')}
+        <div class="card-wrapper sa-6NdtLiO">
+            <component-use id="Card"></component-use>
         </div>
     `
 }
 
-export const COMPONENT_USES = {}
+export const COMPONENT_USES = {
+    "Card": {
+        "component": "Card",
+        "fullMatch": "${useMount(Card)}",
+        "importPath": "./card.mjs",
+        "importLine": 4,
+        "useLine": 28
+    }
+}
 
 export async function importComponent(path) {
         return await import(path)

@@ -31,7 +31,6 @@ function findComponentImports(lines, elementBlock) {
     const imports = {};
     const componentUses = {};
 
-    // Find imports in the entire file
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         const importMatch = line.match(/import\s*{([^}]+)}\s*from\s*['"]([^'"]+)['"]/);
@@ -58,7 +57,8 @@ function findComponentImports(lines, elementBlock) {
             useMatches.forEach(use => {
                 const componentMatch = use.match(/\${useMount\(([^)]+)\)}/);
                 if (componentMatch) {
-                    const componentName = componentMatch[1].trim();
+                    const componentName = componentMatch[1].split(",")[0].trim();
+                    const componentProps = componentMatch[1].split(",")[1]?.trim() || undefined;
                     const importInfo = imports[componentName] || { path: 'Import not found', line: -1 };
 
                     componentUses[componentName] = {
@@ -69,7 +69,7 @@ function findComponentImports(lines, elementBlock) {
                         useLine: i + 1,
                     };
 
-                    lines[i] = line.replace(use, `<component-use id="${componentName}"></component-use>`);
+                    lines[i] = line.replace(use, `<component-use id="${componentName}">${componentProps ? `\${JSON.stringify(${componentProps})}` : "" }</component-use>`);
                 }
             });
         }

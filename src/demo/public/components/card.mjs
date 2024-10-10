@@ -1,22 +1,52 @@
 import { createComponent } from "../../../soft/components/create.mjs"
 
-function element(params) {
+function element({ props }) {
     return `
-        <div class="card">
+        <a class="card" href="/${props?.id}">
             <div class="top">
                 <img class="profile-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNupCwfSPATZwd25fjrcT3hjsB24vwpVSS2g&s" alt="pfp"/>
             </div>
-            <div class="description"></div>
-        </div>
+            <div class="description">${props?.title}</div>
+        </a>
     `
 }
 
 function style() {
-    return /*css*/`
+    return /*css*/`        
+        .card {
+            display: flex;
+            flex-direction: column;
+            height: 25vw;
+            width: 25vw;
+            padding: 1vw;
+            margin: 0.5vw;
+            background: white;
+            border-radius: 1vw;
+        }
         
+        .top {
+            display: flex;
+            height: 5vw;
+            width: 5vw;
+        }
+        
+        .profile-photo {
+            height: 5vw;
+            width: 5vw;
+            border-radius: 1vw;
+        }
+        
+        .description {
+            display: flex;
+            height: fit-content;
+            width: fit-content;
+            margin: 1vw 0 0 0;
+            color: black;
+            font-size: 2vw;
+        }
     `
 }
 
-export function Card(params) {
-    return createComponent(element, style, params)
+export function Card(props) {
+    return createComponent(element, style, undefined, props)
 }

@@ -1,23 +1,23 @@
-export const COMPONENT_ID = "sa-PMXJ1cW";
+export const COMPONENT_ID = "sa-IfXFB5X";
 import { createComponent } from "../../soft/components/create.mjs"
 
 export function element() {
     return `
-        <div class="top sa-PMXJ1cW">
-            <div class="logo sa-PMXJ1cW">
-                <div class="s sa-PMXJ1cW">S</div>
-                <div class="o sa-PMXJ1cW">O</div>
-                <div class="f sa-PMXJ1cW">F</div>
-                <div class="t sa-PMXJ1cW">T</div>
+        <div class="top sa-IfXFB5X">
+            <div class="logo sa-IfXFB5X">
+                <div class="s sa-IfXFB5X">S</div>
+                <div class="o sa-IfXFB5X">O</div>
+                <div class="f sa-IfXFB5X">F</div>
+                <div class="t sa-IfXFB5X">T</div>
             </div>
-            <div class="description sa-PMXJ1cW">A New Way Of Web Apps.</div>
+            <div class="description sa-IfXFB5X">A New Way Of Web Apps.</div>
         </div>
     `
 }
 
 export function style() {
     return `
-        .top.sa-PMXJ1cW {
+        .top.sa-IfXFB5X {
             display: flex;
             flex-direction: column;
             height: fit-content;
@@ -25,7 +25,7 @@ export function style() {
             margin: 10vw 0;
         }
         
-        .logo.sa-PMXJ1cW {
+        .logo.sa-IfXFB5X {
             display: flex;
             height: fit-content;
             width: fit-content;
@@ -35,21 +35,21 @@ export function style() {
             letter-spacing: 0.5vw;
         }
         
-        .s.sa-PMXJ1cW {color: red;}
+        .s.sa-IfXFB5X {color: red;}
         
-        .o.sa-PMXJ1cW {
+        .o.sa-IfXFB5X {
             color: pink;
         }
         
-        .f.sa-PMXJ1cW {
+        .f.sa-IfXFB5X {
             color: lime;
         }
         
-        .t.sa-PMXJ1cW {
+        .t.sa-IfXFB5X {
             color: deepskyblue;
         }
         
-        .description.sa-PMXJ1cW {
+        .description.sa-IfXFB5X {
             display: flex;
             height: fit-content;
             width: fit-content;
@@ -66,14 +66,14 @@ export function Top() {
 
 export function SSRElement() {
     return `
-        <div class="top sa-PMXJ1cW">
-            <div class="logo sa-PMXJ1cW">
-                <div class="s sa-PMXJ1cW">S</div>
-                <div class="o sa-PMXJ1cW">O</div>
-                <div class="f sa-PMXJ1cW">F</div>
-                <div class="t sa-PMXJ1cW">T</div>
+        <div class="top sa-IfXFB5X">
+            <div class="logo sa-IfXFB5X">
+                <div class="s sa-IfXFB5X">S</div>
+                <div class="o sa-IfXFB5X">O</div>
+                <div class="f sa-IfXFB5X">F</div>
+                <div class="t sa-IfXFB5X">T</div>
             </div>
-            <div class="description sa-PMXJ1cW">A New Way Of Web Apps.</div>
+            <div class="description sa-IfXFB5X">A New Way Of Web Apps.</div>
         </div>
     `
 }

@@ -3,7 +3,7 @@ export function extractElement(elementFunction) {
     const lines = elementFunction.functionBlock.split("\n").map(line => line + "\n")
     let element = ""
 
-    const inString = false
+    let inString = false
 
     for (let i = 0; i < lines.length; i++) {
         let endLineNumber = null

@@ -1,5 +1,4 @@
 import { JSDOM } from "jsdom";
-import { extractStyleElementsFromElement } from "./extractStyleElementsFromElement.mjs";
 import { resolveNestedComponents } from "./resolveNestedComponents.mjs";
 
 export async function renderComponent(module, html) {
@@ -12,13 +11,13 @@ export async function renderComponent(module, html) {
     const document = dom.window.document;
 
     let element = await module.SSRElement({ data })
-    
+
     const resolved = await resolveNestedComponents(module, document, element)
-    
+
     element = replaceElement(document, resolved.html, placeholder)
 
     let CSS = module.style ? `<style class="${componentId}">${await module.style()}</style>` : ""
-    CSS = CSS + resolved.css    
+    CSS = CSS + resolved.css
     addCSS(document, CSS)
     addScript(document)
 

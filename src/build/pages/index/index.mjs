@@ -1,4 +1,4 @@
-export const COMPONENT_ID = "sa-wSwlTMB";
+export const COMPONENT_ID = "sa-etjfgzv";
 export const PLACEHOLDER = ".app";
 
 import { createComponent } from "../../../soft/components/create.mjs"
@@ -15,7 +15,7 @@ export async function loadData() {
 
 export function element({ data, props }) {
     return `
-        <div class="app sa-wSwlTMB">
+        <div class="app sa-etjfgzv">
             ${useMount(Top)}
             ${useMount(Reviews, { props: data })}
         </div>
@@ -24,7 +24,7 @@ export function element({ data, props }) {
 
 export function style() {
     return `
-        .app.sa-wSwlTMB {
+        .app.sa-etjfgzv {
             display: flex;
             flex-direction: column;
             height: fit-content;
@@ -33,7 +33,7 @@ export function style() {
     `
 }
 
-export function script(element = document.querySelector(".sa-wSwlTMB")) {
+export function script(element = document.querySelector(".sa-etjfgzv")) {
 }
 
 export const Index = createComponent({
@@ -49,7 +49,7 @@ mountComponent(Index, ".app")
 
 export function SSRElement({ data, props }) {
     return `
-        <div class="app sa-wSwlTMB">
+        <div class="app sa-etjfgzv">
             <component-use id="Top"></component-use>
             <component-use id="Reviews">${JSON.stringify({ props: data })}</component-use>
         </div>

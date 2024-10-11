@@ -18,7 +18,6 @@ export async function resolveNestedComponents(module, document, originalHTML, pr
         const data = childModule.loadData ? await childModule.loadData() : undefined;
 
         propsData.push({ componentId: moduleId, props: props.props, data: data })
-        console.log({ componentId: moduleId, props: props.props, data: data })
 
         let elementHTML = await childModule.SSRElement({ props: props.props, data: data });
 

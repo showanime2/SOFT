@@ -1,7 +1,8 @@
-import { compileStyle } from "../compiler/css/addComponentIdToStyle.mjs"
-import { htmlStringToElement } from "../dom/util.mjs"
-import { addComponentIdToElements } from "./id/addIdToElements.mjs"
-import { generateComponentId } from "./id/generateId.mjs"
+import { compileStyle } from "../compiler/css/addComponentIdToStyle.mjs";
+import { htmlStringToElement } from "../dom/util.mjs";
+import { addComponentIdToElements } from "./id/addIdToElements.mjs";
+import { generateComponentId } from "./id/generateId.mjs";
+import { handleSSRHydration } from "./hydration/hydrate.mjs";
 
 export function createComponent({
     elementFn,
@@ -11,66 +12,60 @@ export function createComponent({
     props,
     componentId
 }) {
+    if (typeof window === "undefined") return;
 
-    if (typeof window === "undefined") return
     if (window.SOFT?.SSR) {
-        const prop = window.SOFT.props.filter(prop => {
-            return prop.componentId === componentId && !prop.hydrated
-        })[0] || {}
-        prop.hydrated = true
-
-        let elements = Array.from(document.querySelectorAll(`.${componentId}`))
-        let element = elements.filter(element => {
-            return !element.hydrated && element.tagName !== "STYLE" && !element.parentElement.classList.contains(componentId)
-        })[0]
-        element.hydrated = true
-
-
-        if (prop && scriptFn) {
-            scriptFn({ ...prop, element })
-        }
-
-        elementFn(prop)
-        return
+        handleSSRHydration(componentId, scriptFn, elementFn);
+        return;
     }
 
-    const id = generateComponentId(7)
+    const id = generateComponentId(7);
+    const { element, HTMLElement } = renderComponent(id, elementFn, props, scriptFn);
 
-    const element = elementFn({ props: props?.props })
-    const HTMLElement = htmlStringToElement(element)
-    addComponentIdToElements(id, HTMLElement)
+    if (loadDataFn) {
+        rerenderOnData(id, loadDataFn, elementFn, scriptFn, HTMLElement, props?.props);
+    }
+
+    const styleElement = handleStyle(id, styleFn);
+    return { element: HTMLElement, styleElement };
+}
+
+function renderComponent(id, elementFn, props, scriptFn) {
+    const element = elementFn({ props: props?.props });
+    const HTMLElement = htmlStringToElement(element);
+    addComponentIdToElements(id, HTMLElement);
 
     if (scriptFn) {
-        scriptFn({ props: props?.props, element: HTMLElement })
+        scriptFn({ props: props?.props, element: HTMLElement });
     }
 
-    if (loadDataFn) rerenderOnData(id, loadDataFn, elementFn, scriptFn, HTMLElement, props?.props)
+    return { element, HTMLElement };
+}
 
-    const styleElement = document.createElement("style")
-    styleElement.id = id
+// Handle component styles
+function handleStyle(id, styleFn) {
+    if (!styleFn) return null;
 
-    if (styleFn) {
-        const css = styleFn()
-        const compiledCSS = compileStyle(css, id)
-        styleElement.textContent = compiledCSS
-    }
+    const styleElement = document.createElement("style");
+    styleElement.id = id;
 
-    return {
-        element: HTMLElement,
-        styleElement,
-    }
+    const css = styleFn();
+    const compiledCSS = compileStyle(css, id);
+    styleElement.textContent = compiledCSS;
+
+    return styleElement;
 }
 
 async function rerenderOnData(id, loadDataFn, elementFn, scriptFn, HTMLElement, props) {
-    const data = await loadDataFn()
+    const data = await loadDataFn();
+    const element = elementFn({ data });
+    const newElement = htmlStringToElement(element);
+    props = props || {};
 
-    const element = elementFn({ data })
-    const newElement = htmlStringToElement(element)
-    props = props || {}
+    addComponentIdToElements(id, newElement);
+    HTMLElement.replaceWith(newElement);
 
-    addComponentIdToElements(id, newElement)
-
-    HTMLElement.replaceWith(newElement)
-
-    scriptFn({ element: newElement, props, data })
+    if (scriptFn) {
+        scriptFn({ element: newElement, props, data });
+    }
 }

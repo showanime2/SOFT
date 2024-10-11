@@ -34,5 +34,12 @@ function script(element) {
 
 }
 
-export const Index = createComponent(element, style, loadData)
+export const Index = createComponent({
+    elementFn: element, 
+    styleFn: style, 
+    scriptFn: script,
+    loadDataFn: loadData,
+    componentId: COMPONENT_ID
+})
+
 mountComponent(Index, ".app")

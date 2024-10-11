@@ -58,6 +58,11 @@ function style() {
     `
 }
 
-export function Top() {
-    return createComponent(element, style)
+export function Top(props) {
+    return createComponent({
+        elementFn: element,
+        styleFn: style,
+        props,
+        componentId: COMPONENT_ID
+    })
 }

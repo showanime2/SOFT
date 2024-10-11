@@ -1,4 +1,4 @@
-export async function resolveNestedComponents(module, document, originalHTML) {
+export async function resolveNestedComponents(module, document, originalHTML, propsData) {
     const ComponentUses = module.COMPONENT_USES;
     let workingHTML = originalHTML;
     let CSS = "";
@@ -8,22 +8,25 @@ export async function resolveNestedComponents(module, document, originalHTML) {
     for (const componentElement of componentElements) {
         const componentId = extractComponentId(componentElement);
         const component = ComponentUses[componentId];
-        const props = extractPropsFromElement(componentElement) ? JSON.parse(extractPropsFromElement(componentElement)) : { props: null}
+        const props = extractPropsFromElement(componentElement) ? JSON.parse(extractPropsFromElement(componentElement)) : { props: null }
 
         if (!component) continue;
-        
+
         const childModule = await module.importComponent(component.importPath);
         const moduleId = childModule.COMPONENT_ID;
-        
+
         const data = childModule.loadData ? await childModule.loadData() : undefined;
 
-        let elementHTML = await childModule.SSRElement({props: props.props, data: data});
+        propsData.push({ componentId: moduleId, props: props.props, data: data })
+        console.log({ componentId: moduleId, props: props.props, data: data })
+
+        let elementHTML = await childModule.SSRElement({ props: props.props, data: data });
 
         workingHTML = workingHTML.replace(componentElement, elementHTML);
 
         CSS += childModule.style ? `<style class="${moduleId}">${await childModule.style()}</style>` : "";
 
-        const nestedResult = await resolveNestedComponents(childModule, document, workingHTML);
+        const nestedResult = await resolveNestedComponents(childModule, document, workingHTML, propsData);
 
         workingHTML = nestedResult.html;
         CSS += nestedResult.css;
@@ -31,7 +34,7 @@ export async function resolveNestedComponents(module, document, originalHTML) {
 
     return {
         html: workingHTML,
-        css: CSS
+        css: CSS,
     };
 }
 

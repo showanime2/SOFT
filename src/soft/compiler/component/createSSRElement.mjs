@@ -58,7 +58,7 @@ function findComponentImports(lines, elementBlock) {
                 const componentMatch = use.match(/\${useMount\(([^)]+)\)}/);
                 if (componentMatch) {
                     const componentName = componentMatch[1].split(",")[0].trim();
-                    const componentProps = componentMatch[1].split(",")[1]?.trim() || undefined;
+                    const componentProps = componentMatch[1].replace(",", "-").split("-")[1]?.trim() || undefined;
                     const importInfo = imports[componentName] || { path: 'Import not found', line: -1 };
 
                     componentUses[componentName] = {

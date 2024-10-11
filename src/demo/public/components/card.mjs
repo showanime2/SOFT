@@ -47,6 +47,22 @@ function style() {
     `
 }
 
+function script({ props, data, element }) {
+    element.addEventListener("mouseenter", () => {
+        element.style.backgroundColor = "red"
+    })
+
+    element.addEventListener("mouseleave", () => {
+        element.style.backgroundColor = "white"
+    })
+}
+
 export function Card(props) {
-    return createComponent(element, style, undefined, props)
+    return createComponent({
+        elementFn: element,
+        styleFn: style,
+        scriptFn: script,
+        props,
+        componentId: COMPONENT_ID
+    })
 }

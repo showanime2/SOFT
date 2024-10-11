@@ -1,19 +1,20 @@
-export const COMPONENT_ID = "sa-GKKOLYU";
+export const COMPONENT_ID = "sa-MF1wskB";
 import { createComponent } from "../../soft/components/create.mjs"
 import { useMount } from "../../soft/components/mount/useMount.mjs"
 import { Card } from "./card.mjs"
 
 export function element({ props, data }) {
     return `
-        <div class="card-wrapper sa-GKKOLYU">
-            ${useMount(Card, { props })}
+        <div class="card-wrapper sa-MF1wskB">
+            ${useMount(Card, { props, data })}
+            ${useMount(Card, { props: {...props, title: "something"}, data })}
         </div>
     `
 }
 
 export function style() {
     return `
-        .card-wrapper.sa-GKKOLYU {
+        .card-wrapper.sa-MF1wskB {
             display: flex;
             height: fit-content;
             width: 100vw;
@@ -22,14 +23,20 @@ export function style() {
 }
 
 export function Reviews(props) {
-    return createComponent(element, style, undefined, props)
+    return createComponent({
+        elementFn: element,
+        styleFn: style,
+        props,
+        componentId: COMPONENT_ID
+    })
 }
 
 
 export function SSRElement({ props, data }) {
     return `
-        <div class="card-wrapper sa-GKKOLYU">
-            <component-use id="Card">${JSON.stringify({ props })}</component-use>
+        <div class="card-wrapper sa-MF1wskB">
+            <component-use id="Card">${JSON.stringify({ props, data })}</component-use>
+            <component-use id="Card">${JSON.stringify({ props: {...props, title: "something"}, data })}</component-use>
         </div>
     `
 }
@@ -37,10 +44,10 @@ export function SSRElement({ props, data }) {
 export const COMPONENT_USES = {
     "Card": {
         "component": "Card",
-        "fullMatch": "${useMount(Card, { props })}",
+        "fullMatch": "${useMount(Card, { props: {...props, title: \"something\"}, data })}",
         "importPath": "./card.mjs",
         "importLine": 4,
-        "useLine": 32
+        "useLine": 39
     }
 }
 

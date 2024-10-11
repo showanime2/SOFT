@@ -12,14 +12,17 @@ export async function renderComponent(module, html) {
 
     let element = await module.SSRElement({ data })
 
-    const resolved = await resolveNestedComponents(module, document, element)
+    const props = []
+
+    props.push({ componentId, props: null, data })
+    const resolved = await resolveNestedComponents(module, document, element, props)
 
     element = replaceElement(document, resolved.html, placeholder)
 
     let CSS = module.style ? `<style class="${componentId}">${await module.style()}</style>` : ""
     CSS = CSS + resolved.css
     addCSS(document, CSS)
-    addScript(document)
+    addScript(document, props)
 
     return dom.serialize()
 }
@@ -35,12 +38,13 @@ function replaceElement(document, element, selector) {
     return placeholder
 }
 
-function addScript(document) {
+function addScript(document, props) {
     let script = document.createElement('script');
     script.textContent = `
         window.SOFT = window.SOFT || {};
         window.SOFT.SSR = {};
         window.SOFT.SSR = true;
+        window.SOFT.props = ${JSON.stringify(props)}
     `;
     document.head.appendChild(script);
 }

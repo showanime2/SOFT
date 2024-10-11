@@ -5,7 +5,8 @@ import { Card } from "./card.mjs"
 function element({ props, data }) {
     return `
         <div class="card-wrapper">
-            ${useMount(Card, { props })}
+            ${useMount(Card, { props, data })}
+            ${useMount(Card, { props: {...props, title: "something"}, data })}
         </div>
     `
 }
@@ -21,5 +22,10 @@ function style() {
 }
 
 export function Reviews(props) {
-    return createComponent(element, style, undefined, props)
+    return createComponent({
+        elementFn: element,
+        styleFn: style,
+        props,
+        componentId: COMPONENT_ID
+    })
 }

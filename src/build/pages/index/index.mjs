@@ -1,4 +1,4 @@
-export const COMPONENT_ID = "sa-ccOaxoF";
+export const COMPONENT_ID = "sa-wSwlTMB";
 export const PLACEHOLDER = ".app";
 
 import { createComponent } from "../../../soft/components/create.mjs"
@@ -15,7 +15,7 @@ export async function loadData() {
 
 export function element({ data, props }) {
     return `
-        <div class="app sa-ccOaxoF">
+        <div class="app sa-wSwlTMB">
             ${useMount(Top)}
             ${useMount(Reviews, { props: data })}
         </div>
@@ -24,7 +24,7 @@ export function element({ data, props }) {
 
 export function style() {
     return `
-        .app.sa-ccOaxoF {
+        .app.sa-wSwlTMB {
             display: flex;
             flex-direction: column;
             height: fit-content;
@@ -33,16 +33,23 @@ export function style() {
     `
 }
 
-export function script(element = document.querySelector(".sa-ccOaxoF")) {
+export function script(element = document.querySelector(".sa-wSwlTMB")) {
 }
 
-export const Index = createComponent(element, style, loadData)
+export const Index = createComponent({
+    elementFn: element, 
+    styleFn: style, 
+    scriptFn: script,
+    loadDataFn: loadData,
+    componentId: COMPONENT_ID
+})
+
 mountComponent(Index, ".app")
 
 
 export function SSRElement({ data, props }) {
     return `
-        <div class="app sa-ccOaxoF">
+        <div class="app sa-wSwlTMB">
             <component-use id="Top"></component-use>
             <component-use id="Reviews">${JSON.stringify({ props: data })}</component-use>
         </div>
@@ -55,14 +62,14 @@ export const COMPONENT_USES = {
         "fullMatch": "${useMount(Top)}",
         "importPath": "../../components/top.mjs",
         "importLine": 8,
-        "useLine": 46
+        "useLine": 53
     },
     "Reviews": {
         "component": "Reviews",
         "fullMatch": "${useMount(Reviews, { props: data })}",
         "importPath": "../../components/reviews.mjs",
         "importLine": 7,
-        "useLine": 47
+        "useLine": 54
     }
 }
 
